@@ -21,10 +21,10 @@ class BaseModel:
             else:
                 kwargs['updated_at'] = datetime.now()
             if 'created_at' in kwargs:
-                    kwargs['created_at'] = datetime.strptime(
-                        kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+                kwargs['created_at'] = datetime.strptime(
+                    kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
             else:
-                    kwargs['created_at'] = datetime.now()
+                kwargs['created_at'] = datetime.now()
             if '__class__' in kwargs:
                 del kwargs['__class__']
             if 'id' not in kwargs:
