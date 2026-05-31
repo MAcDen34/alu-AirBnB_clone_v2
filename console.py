@@ -123,6 +123,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[args_list[0]]()
+        storage.new(new_instance)
         for param in args_list[1:]:
             if '=' not in param:
                 continue
