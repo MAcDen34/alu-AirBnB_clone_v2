@@ -69,3 +69,21 @@ class TestConsole(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    def test_create_with_params(self):
+        """Test create with parameters"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create State name="California"')
+            self.assertIsNotNone(f.getvalue().strip())
+
+    def test_create_with_int_param(self):
+        """Test create with integer parameter"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Place number_rooms=4')
+            self.assertIsNotNone(f.getvalue().strip())
+
+    def test_create_with_float_param(self):
+        """Test create with float parameter"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Place latitude=37.77')
+            self.assertIsNotNone(f.getvalue().strip())
