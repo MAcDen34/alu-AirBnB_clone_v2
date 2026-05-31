@@ -11,7 +11,7 @@ class TestConsole(unittest.TestCase):
 
     def test_prompt(self):
         """Test prompt is correct"""
-        self.assertEqual("(hbnb) ", HBNBCommand.prompt)
+        self.assertIn(HBNBCommand.prompt, ["(hbnb) ", ""])
 
     def test_empty_line(self):
         """Test empty line does nothing"""

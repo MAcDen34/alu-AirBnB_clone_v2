@@ -3,13 +3,6 @@
 from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from models.base_model import Base
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 
 
 class DBStorage:
@@ -30,11 +23,14 @@ class DBStorage:
             pool_pre_ping=True
         )
 
-        if env == 'test':
-            Base.metadata.drop_all(self.__engine)
-
     def all(self, cls=None):
         """Query all objects of a class"""
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
         classes = [User, State, City, Amenity, Place, Review]
         result = {}
         if cls:
@@ -65,6 +61,13 @@ class DBStorage:
 
     def reload(self):
         """Reload data from database"""
+        from models.base_model import Base
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(
             bind=self.__engine, expire_on_commit=False)
