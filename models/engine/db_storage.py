@@ -3,6 +3,7 @@
 from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
+from models.base_model import Base
 
 
 class DBStorage:
@@ -22,6 +23,8 @@ class DBStorage:
             'mysql+mysqldb://{}:{}@{}/{}'.format(user, pwd, host, db),
             pool_pre_ping=True
         )
+        if env == 'test':
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Query all objects of a class"""
@@ -34,6 +37,8 @@ class DBStorage:
         classes = [User, State, City, Amenity, Place, Review]
         result = {}
         if cls:
+            if type(cls) is str:
+                cls = eval(cls)
             objs = self.__session.query(cls).all()
             for obj in objs:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
@@ -61,7 +66,6 @@ class DBStorage:
 
     def reload(self):
         """Reload data from database"""
-        from models.base_model import Base
         from models.user import User
         from models.state import State
         from models.city import City
